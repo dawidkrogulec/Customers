@@ -1,4 +1,13 @@
 package com.dawid.customers.repository;
 
-public class CustomerRepository {
+import com.dawid.customers.model.Customer;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
+
+        List<Customer> findByLastName(String lastName);
+
+        Customer findById(long id);
 }
