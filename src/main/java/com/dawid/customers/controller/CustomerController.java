@@ -34,4 +34,9 @@ public class CustomerController {
 
         return customerRepository.findCustomersByAge(age);
     }
+    @GetMapping("/name/{firstname}")
+    public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstname") String firstname) {
+
+        return customerRepository.findCustomersByFirstName(firstname);
+    }
 }
