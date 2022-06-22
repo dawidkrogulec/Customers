@@ -34,5 +34,4 @@ public class CustomerController {
 
         return customerRepository.findCustomersByAge(age);
     }
-
 }
