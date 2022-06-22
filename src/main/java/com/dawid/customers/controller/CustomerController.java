@@ -3,31 +3,36 @@ package com.dawid.customers.controller;
 import com.dawid.customers.model.Customer;
 import com.dawid.customers.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping("/api/customers")
 public class CustomerController {
 @Autowired
     private CustomerRepository customerRepository;
     @GetMapping("/all")
-    public List<Customer> findAllUsers() {
+    public List<Customer> findAllCustomers() {
 
         return customerRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Customer> findUserById(@PathVariable(value = "id") long id) {
+    @GetMapping("/id/{id}")
+    public Customer findCustomerById(@PathVariable(value = "id") long id) {
 
-        return null;
+        return customerRepository.findById(id);
     }
-    @PostMapping
+    @PostMapping("/customer")
     public Customer saveUser(@Validated @RequestBody Customer customer) {
 
-        return customer;
+        return customerRepository.save(customer);
     }
+    @GetMapping("/age/{age}")
+    public List<Customer> findCustomerByAge(@PathVariable(value = "age") Integer age) {
+
+        return customerRepository.findCustomersByAge(age);
+    }
+
 }
