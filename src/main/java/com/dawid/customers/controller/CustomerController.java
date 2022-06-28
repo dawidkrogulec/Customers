@@ -39,5 +39,4 @@ public class CustomerController {
 
         return customerRepository.findCustomersByFirstName(firstname);
     }
-
 }
