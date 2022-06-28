@@ -11,8 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
-@Autowired
+    @Autowired
     private CustomerRepository customerRepository;
+
     @GetMapping("/all")
     public List<Customer> findAllCustomers() {
 
@@ -24,20 +25,22 @@ public class CustomerController {
 
         return customerRepository.findById(id);
     }
+
     @PostMapping("/customer")
     public Customer saveUser(@Validated @RequestBody Customer customer) {
 
         return customerRepository.save(customer);
     }
+
     @GetMapping("/age/{age}")
     public List<Customer> findCustomerByAge(@PathVariable(value = "age") Integer age) {
 
         return customerRepository.findCustomersByAge(age);
     }
+
     @GetMapping("/name/{firstname}")
     public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstname") String firstname) {
 
         return customerRepository.findCustomersByFirstName(firstname);
     }
-
 }

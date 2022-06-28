@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-        List<Customer> findAll();
+    List<Customer> findAll();
 
-        Customer findById(long id);
+    Customer findById(long id);
 
 
-        List<Customer> findCustomersByAge(Integer age);
+    List<Customer> findCustomersByAge(Integer age);
 
-        List<Customer> findCustomersByFirstName(String firstname);
+    List<Customer> findCustomersByFirstName(String firstname);
 }
