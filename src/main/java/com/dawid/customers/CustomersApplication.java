@@ -28,5 +28,5 @@ public class CustomersApplication {
             repository.save(new Customer("Michelle", "Dessler", 25));
 
         };
-        }
     }
+}
