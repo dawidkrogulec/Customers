@@ -17,4 +17,8 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
     List<Customer> findCustomersByAge(Integer age);
 
     List<Customer> findCustomersByFirstName(String firstname);
+
+    List<Customer> deleteCustomersByFirstName(String firstName);
+
+    List<Customer> updateCustomersById(Long id);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
 import java.util.List;
 
 @RestController
@@ -38,9 +39,17 @@ public class CustomerController {
         return customerRepository.findCustomersByAge(age);
     }
 
-    @GetMapping("/name/{firstname}")
-    public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstname") String firstname) {
+    @GetMapping("/firstname")
+    public List<Customer> findCustomerByFirstName(String firstName) {
 
-        return customerRepository.findCustomersByFirstName(firstname);
+        return customerRepository.findCustomersByFirstName(firstName);
+    }
+    @DeleteMapping("/firstName")
+    public List<Customer> deleteCustomerByFirstName(String firstName){
+        return customerRepository.deleteCustomersByFirstName(firstName);
+    }
+    @PutMapping("/id/{id}")
+    public List<Customer> updateCustomerById(Long id){
+        return customerRepository.updateCustomersById(id);
     }
 }
