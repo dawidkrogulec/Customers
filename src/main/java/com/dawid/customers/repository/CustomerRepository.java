@@ -1,6 +1,7 @@
 package com.dawid.customers.repository;
 
 import com.dawid.customers.model.Customer;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,12 +14,10 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     Customer findById(long id);
 
-
     List<Customer> findCustomersByAge(Integer age);
 
     List<Customer> findCustomersByFirstName(String firstname);
 
-    List<Customer> deleteCustomersByFirstName(String firstName);
+    void deleteCustomersByFirstName(String firstName);
 
-    List<Customer> updateCustomersById(Long id);
 }
