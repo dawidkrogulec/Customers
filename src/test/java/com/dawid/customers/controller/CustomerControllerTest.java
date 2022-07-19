@@ -1,4 +1,5 @@
-import com.dawid.customers.controller.CustomerController;
+package com.dawid.customers.controller;
+
 import com.dawid.customers.model.Customer;
 import com.dawid.customers.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
