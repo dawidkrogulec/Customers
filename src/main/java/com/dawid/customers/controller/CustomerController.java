@@ -7,12 +7,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
+
+    private final static String DELETE_CONFIRMATION = "Customer deleted successfully";
+    private final static String UPDATE_CONFIRMATION = "Customer updated successfully";
+    private final static String CUSTOMER_NOT_FOUND = "Customer with id: %s not found";
 
     @GetMapping("/all")
     public List<Customer> findAllCustomers() {
@@ -38,9 +43,28 @@ public class CustomerController {
         return customerRepository.findCustomersByAge(age);
     }
 
-    @GetMapping("/name/{firstname}")
-    public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstname") String firstname) {
+    @GetMapping("/firstname")
+    public List<Customer> findCustomerByFirstName(String firstName) {
 
-        return customerRepository.findCustomersByFirstName(firstname);
+        return customerRepository.findCustomersByFirstName(firstName);
+    }
+    @DeleteMapping("/firstName")
+    public String deleteCustomerByFirstName(String firstName){
+
+        customerRepository.deleteCustomersByFirstName(firstName);
+
+        return DELETE_CONFIRMATION;
+    }
+    @PutMapping("/{id}")
+    public String updateCustomer(@PathVariable (value = "id")  Long id, @RequestBody Customer cus){
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isPresent()) {
+            Customer customerToBeSaved = cus;
+            customerToBeSaved.setId(id);
+            customerRepository.save(customerToBeSaved);
+            return UPDATE_CONFIRMATION;
+        } else {
+            return String.format(CUSTOMER_NOT_FOUND, id);
+        }
     }
 }
