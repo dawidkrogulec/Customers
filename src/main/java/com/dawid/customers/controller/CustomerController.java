@@ -20,15 +20,15 @@ public class CustomerController {
     private final static String CUSTOMER_NOT_FOUND = "Customer with id: %s not found";
 
     @GetMapping("/all")
-    public List<Customer> findAllCustomers() {
+    public List<Customer> findAllCustomers() {   //czy zwróci wszystkich i czy nie zwróci jeżeli pusta lista
 
         return customerRepository.findAll();
     }
 
     @GetMapping("/id/{id}")
-    public Customer findCustomerById(@PathVariable(value = "id") long id) {
+    public Customer findCustomerById() {
 
-        return customerRepository.findById(id);
+        return customerRepository.findById(1L);
     }
 
     @PostMapping("/customer")

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Entity
 public class Customer {
@@ -30,6 +31,10 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+    }
+
+    public <T> Customer(Optional<T> empty) {
+
     }
 
     @Override
