@@ -31,7 +31,10 @@ import static org.mockito.Mockito.*;
         void shouldReturnAllCustomers() {
             //given
             //when
-            when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_NOT_FOUND);
+            when(repository.findAll()).thenReturn((Fixtures.CUSTOMER_LIST));
+            assertEquals(controller.findAllCustomers(), Fixtures.CUSTOMER_NOT_FOUND_MSG);
+
+
             //then
         }
 
@@ -40,7 +43,7 @@ import static org.mockito.Mockito.*;
             //given
             when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_NOT_FOUND);
             //when
-            assertEquals(controller.updateCustomer(any(),Fixtures.CUSTOMER_WITH_NO_ID),Fixtures.CUSTOMER_UPDATED_MSG);
+            assertEquals(controller.updateCustomer(any(), Fixtures.CUSTOMER_WITH_NO_ID),Fixtures.CUSTOMER_UPDATED_MSG);
             //then
             verify(repository, times(1)).findById(any());
             verify(repository, times(0)).save(any());
