@@ -55,6 +55,17 @@ public class CustomerController {
 
         return DELETE_CONFIRMATION;
     }
+    @GetMapping("/id/{id}")
+    public Customer findCustomerById(@PathVariable (value = "id")  Long id) {
+
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        if(customer.isPresent()){
+            return customer.get();
+        } else {
+            return null;
+        }
+    }
     @PutMapping("/{id}")
     public String updateCustomer(@PathVariable (value = "id")  Long id, @RequestBody Customer cus){
         Optional<Customer> customer = customerRepository.findById(id);
