@@ -69,9 +69,8 @@ class CustomerControllerTest {
         verify(repository, times(1)).save(any());
 
     }
-
     @Test
-    void shouldReturnCustomer(){
+    void shouldReturnCustomerById(){
 
         //given
         when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_FOUND);
@@ -84,9 +83,8 @@ class CustomerControllerTest {
         assertEquals(Fixtures.CUSTOMER_WITH_ID.getLastName(), customer.getLastName());
 
     }
-
     @Test
-    void shouldNotReturnCustomer(){
+    void shouldNotReturnCustomerById(){
         //given
         when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_NOT_FOUND);
         //when
@@ -95,11 +93,65 @@ class CustomerControllerTest {
         assertNull(customer);
     }
 
+    @Test
+    void shouldReturnCustomersByAge(){
+        //given
+        when(repository.findCustomersByAge(55)).thenReturn(Fixtures.CUSTOMER_LIST_SAME_AGE);
+        //when
+        List<Customer> customers = controller.findCustomerByAge(55);
+        //then
+        assertEquals(2, customers.size());
+        assertEquals(55, customers.get(0).getAge());
+        assertEquals(55, customers.get(1).getAge());
+        verify(repository, times(1)).findCustomersByAge(any());
+
+    }
+
+    @Test
+    void shouldNotReturnCustomersByAge(){
+        //given
+        when(repository.findCustomersByAge(99)).thenReturn(Fixtures.NO_CUSTOMERS_FOUND);
+        //when
+        List<Customer> customers = controller.findCustomerByAge(99);
+        //then
+        assertEquals(0, customers.size());
+        verify(repository, times(1)).findCustomersByAge(99);
+    }
+
+    @Test
+    void shouldReturnCustomersByFirstName(){
+        //given
+        when(repository.findCustomersByFirstName("Robert")).thenReturn(Fixtures.CUSTOMER_LIST_SAME_FIRST_NAME);
+        //when
+        List<Customer> customers = controller.findCustomerByFirstName("Robert");
+        //then
+        assertEquals(2, customers.size());
+        assertEquals("Robert", customers.get(0).getFirstName());
+        assertEquals("Robert", customers.get(1).getFirstName());
+        verify(repository, times(1)).findCustomersByFirstName(any());
+    }
+
+    @Test
+    void shouldNotReturnCustomersByFirstName(){
+        //given
+        when(repository.findCustomersByFirstName("Dawid")).thenReturn(Fixtures.NO_CUSTOMERS_FOUND);
+        //when
+        List<Customer> customers = controller.findCustomerByFirstName("Dawid");
+        //then
+        assertEquals(0, customers.size());
+        verify(repository, times(1)).findCustomersByFirstName(any());
+    }
+
     private static class Fixtures{
         private final static Optional<Customer> CUSTOMER_FOUND = Optional.of(new Customer(3L, "Dawid", "Krogulec", 39));
         private final static Customer CUSTOMER_WITH_NO_ID = new Customer("Dawid", "Krogulec", 39);
         private final static List<Customer> NO_CUSTOMERS_FOUND = new ArrayList<>();
-        //listę customerów
+
+        private static final  List<Customer> CUSTOMER_LIST_SAME_AGE = Arrays.asList(new Customer(0L, "Jaś", "Fasola", 55),
+                new Customer(1L, "Jasia", "Fasola", 55));
+
+        private static final  List<Customer> CUSTOMER_LIST_SAME_FIRST_NAME = Arrays.asList(new Customer(0L, "Robert", "Lewandowski", 33),
+                new Customer(1L, "Robert", "Kubica", 33));
         private static final  List<Customer> CUSTOMER_LIST = Arrays.asList(new Customer(0L, "Łukasz", "Curzydło", 33),
                 new Customer(1L, "Karol", "Krogulec", 37),
                 new Customer(2L, "Dawid", "Krogulec", 40));
