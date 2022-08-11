@@ -26,12 +26,6 @@ public class CustomerController {
         return customerRepository.findAll();
     }
 
-    @GetMapping("/id/{id}")
-    public Customer findCustomerById() {
-
-        return customerRepository.findById(1L);
-    }
-
     @PostMapping("/customer")
     public Customer saveUser(@Validated @RequestBody Customer customer) {
 
@@ -44,13 +38,13 @@ public class CustomerController {
         return customerRepository.findCustomersByAge(age);
     }
 
-    @GetMapping("/firstname")
-    public List<Customer> findCustomerByFirstName(String firstName) {
+    @GetMapping("/firstname/{firstName}")
+    public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
 
         char[] input = firstName.toCharArray();
                 for(char c : input) {
                     if (Character.isDigit(c)) {
-                    throw new InvalidNameInput("Fatal Error");
+                    throw new InvalidNameInput("FInvalid name provided");
                     }
                 }
         return customerRepository.findCustomersByFirstName(firstName);
