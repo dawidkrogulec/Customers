@@ -1,5 +1,6 @@
 package com.dawid.customers.controller;
 
+import com.dawid.customers.exception.InvalidNameInput;
 import com.dawid.customers.model.Customer;
 import com.dawid.customers.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class CustomerController {
     @GetMapping("/firstname")
     public List<Customer> findCustomerByFirstName(String firstName) {
 
+        char[] input = firstName.toCharArray();
+                for(char c : input) {
+                    if (Character.isDigit(c)) {
+                    throw new InvalidNameInput("Fatal Error");
+                    }
+                }
         return customerRepository.findCustomersByFirstName(firstName);
     }
     @DeleteMapping("/firstName")
