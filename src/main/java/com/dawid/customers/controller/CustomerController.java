@@ -44,7 +44,7 @@ public class CustomerController {
         char[] input = firstName.toCharArray();
                 for(char c : input) {
                     if (Character.isDigit(c)) {
-                    throw new InvalidNameInput("FInvalid name provided");
+                    throw new InvalidNameInput("Invalid name provided");
                     }
                 }
         return customerRepository.findCustomersByFirstName(firstName);

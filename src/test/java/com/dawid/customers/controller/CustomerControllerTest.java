@@ -141,7 +141,20 @@ class CustomerControllerTest {
         verify(repository, times(1)).findCustomersByFirstName(any());
     }
 
-    private static class Fixtures{
+    @Test
+    void shouldThrowExceptionOnInvalidFirstName(){  //dokończyć i dodać też Fixtures
+        //given
+        when(repository.findCustomersByFirstName("Robert")).thenReturn(Fixtures.CUSTOMER_LIST_SAME_FIRST_NAME);
+        //when
+        List<Customer> customers = controller.findCustomerByFirstName("Robert");
+        //then
+        assertEquals(2, customers.size());
+        assertEquals("Robert", customers.get(0).getFirstName());
+        assertEquals("Robert", customers.get(1).getFirstName());
+        verify(repository, times(1)).findCustomersByFirstName(any());
+    }
+
+    private static class Fixtures{ //dodać do Fixtures ostatni scenariusz
         private final static Optional<Customer> CUSTOMER_FOUND = Optional.of(new Customer(3L, "Dawid", "Krogulec", 39));
         private final static Customer CUSTOMER_WITH_NO_ID = new Customer("Dawid", "Krogulec", 39);
         private final static List<Customer> NO_CUSTOMERS_FOUND = new ArrayList<>();
