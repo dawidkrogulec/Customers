@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class CustomerControllerTest {
 
@@ -33,11 +34,12 @@ class CustomerControllerTest {
         //when
         when(repository.findAll()).thenReturn((Fixtures.CUSTOMER_LIST));
         List<Customer> result = controller.findAllCustomers();
-        assertEquals(3,result.size());
+        assertEquals(3, result.size());
 
 
         //then
     }
+
     @Test
     void shouldReturnZeroCustomers() {
         //given
@@ -46,6 +48,7 @@ class CustomerControllerTest {
         List<Customer> result = controller.findAllCustomers();
         assertEquals(0, result.size());
     }
+
     @Test
     void shouldNotUpdateCustomer() {
         //given
@@ -68,8 +71,9 @@ class CustomerControllerTest {
         verify(repository, times(1)).save(any());
 
     }
+
     @Test
-    void shouldReturnCustomerById(){
+    void shouldReturnCustomerById() {
 
         //given
         when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_FOUND);
@@ -82,8 +86,9 @@ class CustomerControllerTest {
         assertEquals(Fixtures.CUSTOMER_WITH_ID.getLastName(), customer.getLastName());
 
     }
+
     @Test
-    void shouldNotReturnCustomerById(){
+    void shouldNotReturnCustomerById() {
         //given
         when(repository.findById(any())).thenReturn(Fixtures.CUSTOMER_NOT_FOUND);
         //when
@@ -93,7 +98,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldReturnCustomersByAge(){
+    void shouldReturnCustomersByAge() {
         //given
         when(repository.findCustomersByAge(55)).thenReturn(Fixtures.CUSTOMER_LIST_SAME_AGE);
         //when
@@ -107,7 +112,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldNotReturnCustomersByAge(){
+    void shouldNotReturnCustomersByAge() {
         //given
         when(repository.findCustomersByAge(99)).thenReturn(Fixtures.NO_CUSTOMERS_FOUND);
         //when
@@ -118,7 +123,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldReturnCustomersByFirstName(){
+    void shouldReturnCustomersByFirstName() {
         //given
         when(repository.findCustomersByFirstName("Robert")).thenReturn(Fixtures.CUSTOMER_LIST_SAME_FIRST_NAME);
         //when
@@ -131,7 +136,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldNotReturnCustomersByFirstName(){
+    void shouldNotReturnCustomersByFirstName() {
         //given
         when(repository.findCustomersByFirstName("Dawid")).thenReturn(Fixtures.NO_CUSTOMERS_FOUND);
         //when
@@ -142,7 +147,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionOnInvalidFirstName(){  //dokończyć i dodać też Fixtures
+    void shouldThrowExceptionOnInvalidFirstName() {
         //given
         when(repository.findCustomersByFirstName("Robert")).thenReturn(Fixtures.CUSTOMER_LIST_SAME_FIRST_NAME);
         //when
@@ -154,17 +159,17 @@ class CustomerControllerTest {
         verify(repository, times(1)).findCustomersByFirstName(any());
     }
 
-    private static class Fixtures{ //dodać do Fixtures ostatni scenariusz
+    private static class Fixtures { //dodać do Fixtures ostatni scenariusz
         private final static Optional<Customer> CUSTOMER_FOUND = Optional.of(new Customer(3L, "Dawid", "Krogulec", 39));
         private final static Customer CUSTOMER_WITH_NO_ID = new Customer("Dawid", "Krogulec", 39);
         private final static List<Customer> NO_CUSTOMERS_FOUND = new ArrayList<>();
 
-        private static final  List<Customer> CUSTOMER_LIST_SAME_AGE = Arrays.asList(new Customer(0L, "Jaś", "Fasola", 55),
+        private static final List<Customer> CUSTOMER_LIST_SAME_AGE = Arrays.asList(new Customer(0L, "Jaś", "Fasola", 55),
                 new Customer(1L, "Jasia", "Fasola", 55));
 
-        private static final  List<Customer> CUSTOMER_LIST_SAME_FIRST_NAME = Arrays.asList(new Customer(0L, "Robert", "Lewandowski", 33),
+        private static final List<Customer> CUSTOMER_LIST_SAME_FIRST_NAME = Arrays.asList(new Customer(0L, "Robert", "Lewandowski", 33),
                 new Customer(1L, "Robert", "Kubica", 33));
-        private static final  List<Customer> CUSTOMER_LIST = Arrays.asList(new Customer(0L, "Łukasz", "Curzydło", 33),
+        private static final List<Customer> CUSTOMER_LIST = Arrays.asList(new Customer(0L, "Łukasz", "Curzydło", 33),
                 new Customer(1L, "Karol", "Krogulec", 37),
                 new Customer(2L, "Dawid", "Krogulec", 40));
 

@@ -3,7 +3,6 @@ package com.dawid.customers.integration;
 import com.dawid.customers.controller.CustomerController;
 import com.dawid.customers.model.Customer;
 import com.dawid.customers.repository.CustomerRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,4 +47,6 @@ public class CustomerIntegrationTests {
         List<Customer> customerList = customerRepository.findCustomersByFirstName("Karol");
         assertThat(customerList.get(0).getFirstName()).isEqualTo("Karol");
     }
+
+}
 }

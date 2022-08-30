@@ -13,7 +13,7 @@ public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value
-            = { InvalidNameInput.class })
+            = {InvalidNameInput.class})
     protected ResponseEntity<Object> handleInvalidName(
             RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(),

@@ -13,12 +13,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
-    @Autowired
-    private CustomerRepository customerRepository;
-
     private final static String DELETE_CONFIRMATION = "Customer deleted successfully";
     private final static String UPDATE_CONFIRMATION = "Customer updated successfully";
     private final static String CUSTOMER_NOT_FOUND = "Customer with id: %s not found";
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @GetMapping("/all")
     public List<Customer> findAllCustomers() {   //czy zwróci wszystkich i czy nie zwróci jeżeli pusta lista
@@ -42,35 +41,38 @@ public class CustomerController {
     public List<Customer> findCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
 
         char[] input = firstName.toCharArray();
-                for(char c : input) {
-                    if (Character.isDigit(c)) {
-                    throw new InvalidNameInput("Invalid name provided");
-                    }
-                }
+        for (char c : input) {
+            if (Character.isDigit(c)) {
+                throw new InvalidNameInput("Invalid name provided");
+            }
+        }
         return customerRepository.findCustomersByFirstName(firstName);
     }
+
     @DeleteMapping("/firstName")
-    public String deleteCustomerByFirstName(String firstName){
+    public String deleteCustomerByFirstName(String firstName) {
 
         customerRepository.deleteCustomersByFirstName(firstName);
 
         return DELETE_CONFIRMATION;
     }
+
     @GetMapping("/id/{id}")
-    public Customer findCustomerById(@PathVariable (value = "id")  Long id) {
+    public Customer findCustomerById(@PathVariable(value = "id") Long id) {
 
         Optional<Customer> customer = customerRepository.findById(id);
 
-        if(customer.isPresent()){
+        if (customer.isPresent()) {
             return customer.get();
         } else {
             return null;
         }
     }
+
     @PutMapping("/{id}")
-    public String updateCustomer(@PathVariable (value = "id")  Long id, @RequestBody Customer cus){
+    public String updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer cus) {
         Optional<Customer> customer = customerRepository.findById(id);
-        if(customer.isPresent()) {
+        if (customer.isPresent()) {
             Customer customerToBeSaved = cus;
             customerToBeSaved.setId(id);
             customerRepository.save(customerToBeSaved);
