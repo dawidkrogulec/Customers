@@ -13,8 +13,10 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     Customer findById(long id);
 
-
     List<Customer> findCustomersByAge(Integer age);
 
     List<Customer> findCustomersByFirstName(String firstname);
+
+    void deleteCustomersByFirstName(String firstName);
+
 }
